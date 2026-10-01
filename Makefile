@@ -1,24 +1,34 @@
+RUST_DIR := rust
+MANIFEST := $(RUST_DIR)/Cargo.toml
+
+.PHONY: rust-version format format-check lint test run release build-release all
+
 rust-version:
 	@echo "Rust command-line utility versions:"
-	rustc --version 			#rust compiler
-	cargo --version 			#rust package manager
-	rustfmt --version			#rust code formatter
-	rustup --version			#rust toolchain manager
-	clippy-driver --version		#rust linter
+	rustc --version			# Rust compiler
+	cargo --version			# Rust package manager
+	rustfmt --version			# Rust code formatter
+	rustup --version			# Rust toolchain manager
+	clippy-driver --version		# Rust linter
 
 format:
-	cargo fmt  --quiet
+	cargo fmt --manifest-path $(MANIFEST) --quiet
+
+format-check:
+	cargo fmt --manifest-path $(MANIFEST) --check --quiet
 
 lint:
-	cargo clippy  --quiet
+	cargo clippy --manifest-path $(MANIFEST) --quiet
 
 test:
-	cargo test  --quiet
+	cargo test --manifest-path $(MANIFEST) --quiet
 
 run:
-	cargo run
+	cargo run --manifest-path $(MANIFEST)
 
 release:
-	cargo build --release
+	cargo build --manifest-path $(MANIFEST) --release
+
+build-release: release
 
 all: format lint test run
