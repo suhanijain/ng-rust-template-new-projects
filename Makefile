@@ -1,3 +1,5 @@
+RUST_DIR := rust
+
 rust-version:
 	@echo "Rust command-line utility versions:"
 	rustc --version 			#rust compiler
@@ -7,13 +9,13 @@ rust-version:
 	clippy-driver --version		#rust linter
 
 format:
-	cargo fmt --quiet
+	cargo fmt --manifest-path $(RUST_DIR)/Cargo.toml --quiet
 
 lint:
-	cargo clippy --quiet
+	cargo clippy --manifest-path $(RUST_DIR)/Cargo.toml --quiet
 
 test:
-	cargo test --quiet
+	cargo test --manifest-path $(RUST_DIR)/Cargo.toml --quiet
 
 run:
 	cargo run
